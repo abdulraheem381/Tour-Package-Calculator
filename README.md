@@ -23,10 +23,6 @@ The goal of this project is not only the application itself, but the **systems, 
 - A playground for CI/CD, Docker, Kubernetes, and observability
 - A tool for calculating tour packages, managing services, hotels, and rates.
 
-**This project is NOT:**
-- A production business
-- A generic e-commerce storefront
-
 The focus is **DevOps, not just features**.
 
 ---
