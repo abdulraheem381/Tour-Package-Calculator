@@ -1,3 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --color-bg-deep: #0f0a1e;
+    --color-bg-soft: #1a142e;
+    --color-primary: #818cf8;
+    --color-secondary: #22d3ee;
+    --color-accent: #f471b5;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--color-bg-deep);
+    color: white;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+}
+
+.gradient-text {
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.btn-premium {
+    @apply px-8 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105 active:scale-95;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    box-shadow: 0 4px 15px rgba(129, 140, 248, 0.4);
+}
+
+.btn-premium:hover {
+    box-shadow: 0 6px 20px rgba(129, 140, 248, 0.6);
+}
+
+.card-booking {
+    @apply rounded-2xl p-6 transition-all duration-500 hover:translate-y-[-5px];
+    background: rgba(26, 20, 46, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card-booking:hover {
+    border: 1px solid rgba(129, 140, 248, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}

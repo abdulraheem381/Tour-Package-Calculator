@@ -1,139 +1,124 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, User, LogOut, Search, Menu } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, Instagram, Twitter, Facebook, ArrowUp, Briefcase } from 'lucide-react';
+import Navbar from './Navbar';
 
 const Layout = () => {
-    const { user, logout } = useAuth();
-    const navigate = useNavigate();
-    const [scrolled, setScrolled] = useState(false);
+    const [showScrollTop, setShowScrollTop] = useState(false);
 
-    // Handle scroll effect for navbar
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 20);
+        const handleScroll = () => setShowScrollTop(window.scrollY > 400);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (
-        <div className="layout">
-            <header className={`navbar ${scrolled ? 'shadow-sm' : 'bg-transparent border-transparent'}`}
-                style={{
-                    backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0)',
-                    backdropFilter: scrolled ? 'blur(12px)' : 'none',
-                    borderBottom: scrolled ? '1px solid rgba(0,0,0,0.05)' : 'none',
-                    textShadow: scrolled ? 'none' : '0 2px 4px rgba(0,0,0,0.3)'
-                }}
-            >
-                <div className="container navbar-content">
-                    {/* Logo */}
-                    <Link to="/" className="text-2xl font-serif font-bold tracking-tighter z-50 mix-blend-difference"
-                        style={{ color: scrolled ? 'var(--color-text-primary)' : 'white' }}>
-                        LUXE<span className="text-primary">.</span>STORE
-                    </Link>
+        <div className="flex flex-col min-h-screen bg-[#0f0a1e] font-['Outfit'] selection:bg-indigo-500/30">
+            <Navbar />
 
-                    {/* Desktop Nav */}
-                    <nav className="hidden md:flex nav-links">
-                        <Link to="/" className="nav-link" style={{ color: scrolled ? 'var(--color-text-secondary)' : 'white' }}>Collections</Link>
-                        <Link to="/" className="nav-link" style={{ color: scrolled ? 'var(--color-text-secondary)' : 'white' }}>New Arrivals</Link>
-                        <Link to="/" className="nav-link" style={{ color: scrolled ? 'var(--color-text-secondary)' : 'white' }}>Accessories</Link>
-                    </nav>
-
-                    {/* Actions */}
-                    <div className="flex items-center gap-6">
-                        <button className="p-2 hover:bg-black/5 rounded-full transition-colors" style={{ color: scrolled ? 'var(--color-text-primary)' : 'white' }}>
-                            <Search className="w-5 h-5" />
-                        </button>
-
-                        <Link to="/cart" className="relative p-2 hover:bg-black/5 rounded-full" style={{ color: scrolled ? 'var(--color-text-primary)' : 'white' }}>
-                            <ShoppingCart className="w-5 h-5" />
-                            {/* Optional: Add badge here if cartItems.length > 0 */}
-                        </Link>
-
-                        {user ? (
-                            <div className="flex items-center gap-3">
-                                <Link to="/dashboard" className="hidden md:flex items-center gap-2 text-sm font-semibold" style={{ color: scrolled ? 'var(--color-text-primary)' : 'white' }}>
-                                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-md border-2 border-white">
-                                        {user.username.charAt(0).toUpperCase()}
-                                    </div>
-                                </Link>
-                                <button onClick={handleLogout} className="p-2 hover:bg-red-50 hover:text-red-500 rounded-full transition-colors" style={{ color: scrolled ? 'var(--color-text-primary)' : 'white' }}>
-                                    <LogOut className="w-5 h-5" />
-                                </button>
-                            </div>
-                        ) : (
-                            <div className="flex items-center gap-4">
-                                <Link to="/login" className="font-semibold hover:opacity-80 transition-opacity" style={{ color: scrolled ? 'var(--color-text-primary)' : 'white' }}>
-                                    Login
-                                </Link>
-                                <Link to="/register" className={`btn ${scrolled ? 'btn-primary' : 'bg-white text-black hover:bg-gray-100'} px-5 py-2`}>
-                                    Join
-                                </Link>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </header>
-
-            <main className="flex-1">
+            <main className="flex-grow">
                 <AnimatePresence mode="wait">
-                    <Outlet />
+                    <motion.div
+                        key={window.location.pathname}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <Outlet />
+                    </motion.div>
                 </AnimatePresence>
             </main>
 
-            <footer className="bg-gray-900 text-white py-16 border-t border-gray-800">
-                <div className="container">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <footer className="bg-[#0a0614] pt-24 pb-12 border-t border-white/5 relative overflow-hidden">
+                {/* Decoration Orbs */}
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-600/5 rounded-full blur-[80px]"></div>
+
+                <div className="container mx-auto px-6 relative z-10">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                         <div className="col-span-1 md:col-span-1">
-                            <h3 className="text-2xl font-serif font-bold mb-6">LUXE.STORE</h3>
-                            <p className="text-gray-400 text-sm leading-relaxed">
-                                Redefining the modern shopping experience with curated collections and unparalleled quality.
+                            <Link to="/" className="flex items-center gap-2 mb-6 group">
+                                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-lg group-hover:rotate-12 transition-transform duration-300">
+                                    <Briefcase size={24} />
+                                </div>
+                                <span className="text-2xl font-black tracking-tighter text-white uppercase">
+                                    TOUR<span className="text-indigo-400">PAK.</span>
+                                </span>
+                            </Link>
+                            <p className="text-white/40 text-sm leading-relaxed max-w-xs">
+                                Redefining tour package management with professional tools and premium experiences. Plan your next adventure with confidence.
                             </p>
                         </div>
+
                         <div>
-                            <h4 className="font-bold mb-6">Shop</h4>
-                            <ul className="space-y-3 text-gray-400 text-sm">
-                                <li><Link to="#" className="hover:text-white transition-colors">New Arrivals</Link></li>
-                                <li><Link to="#" className="hover:text-white transition-colors">Best Sellers</Link></li>
-                                <li><Link to="#" className="hover:text-white transition-colors">Accessories</Link></li>
-                                <li><Link to="#" className="hover:text-white transition-colors">Sale</Link></li>
+                            <h4 className="text-white font-bold mb-6 text-lg">Quick Links</h4>
+                            <ul className="space-y-3 text-white/40 text-sm">
+                                <li><Link to="/" className="hover:text-indigo-400 transition-colors">Home</Link></li>
+                                <li><Link to="/dashboard" className="hover:text-indigo-400 transition-colors">Dashboard</Link></li>
+                                <li><Link to="/agent" className="hover:text-indigo-400 transition-colors">Agents List</Link></li>
+                                <li><Link to="/hotel" className="hover:text-indigo-400 transition-colors">Hotels Directory</Link></li>
                             </ul>
                         </div>
+
                         <div>
-                            <h4 className="font-bold mb-6">Support</h4>
-                            <ul className="space-y-3 text-gray-400 text-sm">
-                                <li><Link to="#" className="hover:text-white transition-colors">Help Center</Link></li>
-                                <li><Link to="#" className="hover:text-white transition-colors">Shipping & Returns</Link></li>
-                                <li><Link to="#" className="hover:text-white transition-colors">Size Guide</Link></li>
-                                <li><Link to="#" className="hover:text-white transition-colors">Contact Us</Link></li>
+                            <h4 className="text-white font-bold mb-6 text-lg">Support</h4>
+                            <ul className="space-y-3 text-white/40 text-sm">
+                                <li><Link to="#" className="hover:text-indigo-400 transition-colors">Documentation</Link></li>
+                                <li><Link to="#" className="hover:text-indigo-400 transition-colors">Privacy Policy</Link></li>
+                                <li><Link to="#" className="hover:text-indigo-400 transition-colors">Terms of Service</Link></li>
+                                <li><Link to="#" className="hover:text-indigo-400 transition-colors">Help Center</Link></li>
                             </ul>
                         </div>
+
                         <div>
-                            <h4 className="font-bold mb-6">Newsletter</h4>
-                            <p className="text-gray-400 text-sm mb-4">Subscribe for exclusive drops.</p>
-                            <div className="flex bg-gray-800 rounded-full p-1 border border-gray-700 focus-within:border-gray-500 transition-colors">
-                                <input type="email" placeholder="email@example.com" className="bg-transparent border-none text-white px-4 py-2 w-full focus:outline-none text-sm" />
-                                <button className="bg-white text-black rounded-full px-4 py-2 text-xs font-bold uppercase hover:bg-gray-200 transition-colors">
+                            <h4 className="text-white font-bold mb-6 text-lg">Newsletter</h4>
+                            <p className="text-white/40 text-sm mb-6">Stay updated with the latest destinations.</p>
+                            <div className="flex bg-white/5 rounded-2xl p-1 border border-white/10 focus-within:border-indigo-500/50 transition-all">
+                                <input
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    className="bg-transparent border-none text-white px-4 py-2 w-full focus:outline-none text-sm placeholder:text-white/20"
+                                />
+                                <button className="bg-indigo-500 text-white rounded-xl px-4 py-2 text-xs font-bold uppercase hover:bg-indigo-400 transition-colors">
                                     Join
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <div className="pt-8 border-t border-gray-800 flex justify-between items-center text-xs text-gray-500">
-                        <p>&copy; 2026 Commit2Prod Storefront. All rights reserved.</p>
-                        <div className="flex gap-4">
-                            <span>Privacy Policy</span>
-                            <span>Terms of Service</span>
+
+                    <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                        <p className="text-xs text-white/20 tracking-widest font-medium uppercase">
+                            &copy; 2026 Tour Package Calculator • Built for DevOps Excellence
+                        </p>
+                        <div className="flex gap-6 text-white/40">
+                            <a href="#" className="hover:text-indigo-400 transition-colors"><Instagram size={20} /></a>
+                            <a href="#" className="hover:text-indigo-400 transition-colors"><Twitter size={20} /></a>
+                            <a href="#" className="hover:text-indigo-400 transition-colors"><Facebook size={20} /></a>
+                            <a href="#" className="hover:text-indigo-400 transition-colors"><Mail size={20} /></a>
                         </div>
                     </div>
                 </div>
             </footer>
+
+            {/* Scroll to top button */}
+            <AnimatePresence>
+                {showScrollTop && (
+                    <motion.button
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        onClick={scrollToTop}
+                        className="fixed bottom-8 right-8 p-4 bg-indigo-500 text-white rounded-2xl shadow-2xl z-50 hover:bg-indigo-400 transition-colors border border-white/10"
+                    >
+                        <ArrowUp size={24} />
+                    </motion.button>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

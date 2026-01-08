@@ -8,7 +8,8 @@ ARG VITE_API_URL
 ENV VITE_API_URL=$VITE_API_URL
 
 COPY package*.json ./
-RUN npm install
+# npm ci is faster and more reliable in Docker if the lockfile is correct
+RUN npm ci
 
 COPY . .
 RUN npm run build
