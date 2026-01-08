@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../utils/axios";
@@ -86,89 +85,6 @@ const Login = () => {
       </div>
     </>
   );
-=======
-import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
-
-const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
-    const { login } = useAuth();
-    const navigate = useNavigate();
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError('');
-
-        if (!email || !password) {
-            return setError('Please enter both email and password.');
-        }
-
-        setLoading(true);
-        const res = await login(email, password);
-        setLoading(false);
-
-        if (res.success) {
-            navigate('/dashboard');
-        } else {
-            setError(res.message);
-        }
-    };
-
-    return (
-        <div className="flex justify-center items-start pt-12 animate-fade-in">
-            <div className="card w-full max-w-md p-8">
-                <div className="text-center mb-8">
-                    <h1>Welcome Back</h1>
-                    <p>Please enter your details to sign in.</p>
-                </div>
-
-                {error && (
-                    <div className="bg-red-50 text-error text-sm p-3 rounded-md mb-6 border border-red-100 flex items-center">
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        {error}
-                    </div>
-                )}
-
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label className="form-label">Email</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="form-input"
-                            placeholder="Enter your email"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label className="form-label">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="form-input"
-                            placeholder="Enter your password"
-                        />
-                    </div>
-                    <button type="submit" className="btn btn-primary w-full mt-4" disabled={loading}>
-                        {loading ? 'Signing In...' : 'Sign In'}
-                    </button>
-                </form>
-
-                <div className="mt-6 text-center text-sm">
-                    Don't have an account?{' '}
-                    <Link to="/register" className="text-link">
-                        Create an account
-                    </Link>
-                </div>
-            </div>
-        </div>
-    );
->>>>>>> f0044c4433d58b6d27cf1b70d793ae3f0f49f5ea
 };
 
 export default Login;

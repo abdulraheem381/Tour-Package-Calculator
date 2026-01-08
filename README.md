@@ -81,6 +81,38 @@ Tour-Package-Calculator/
 
 ---
 
+## 🏗️ CI/CD & DevOps Readiness
+
+This project is configured for automated testing and builds, which can be integrated into CI/CD pipelines (e.g., GitHub Actions).
+
+### 🧪 Automated Testing
+
+#### Backend Tests
+Run the backend unit and API tests:
+```bash
+cd app/backend
+npm test
+```
+
+#### Frontend Tests
+Run the frontend component and unit tests:
+```bash
+cd app/frontend
+npm test
+```
+
+### 🛠️ Build Process
+
+#### Frontend Build
+Build the production-ready frontend assets:
+```bash
+cd app/frontend
+npm run build
+```
+The output will be in the `app/frontend/dist` directory, ready to be served by Nginx or uploaded to a static host.
+
+---
+
 ## ⚡ Local Development
 
 ### Prerequisites

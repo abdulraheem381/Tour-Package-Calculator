@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -32,8 +31,8 @@ const Navbar = () => {
         <h1 className="text-xl font-bold text-white">TOUR PACKAGE CALCULATOR</h1>
       </div>
 
-      
-    <div className="flex gap-6 items-center">
+
+      <div className="flex gap-6 items-center">
         {userData ? (
           <div className="dropdown dropdown-end hidden md:flex">
             <Link
@@ -101,7 +100,7 @@ const Navbar = () => {
           >
             Profile
           </Link>
-     
+
         </div>
       )}
     </div>
@@ -109,33 +108,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-=======
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
-
-const Navbar = () => {
-    const { cart } = useCart();
-    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-    return (
-        <nav className="glass" style={{ position: 'sticky', top: 0, zIndex: 100 }}>
-            <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
-                <Link to="/" style={{ fontSize: '1.5rem', fontWeight: '800', textDecoration: 'none', color: '#0f172a', letterSpacing: '-0.025em' }}>
-                    storefront<span style={{ color: '#3b82f6' }}>.devops</span>
-                </Link>
-                <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-                    <Link to="/" style={{ textDecoration: 'none', color: '#64748b', fontWeight: '500', transition: 'color 0.2s' }}>Home</Link>
-                    <Link to="/products" style={{ textDecoration: 'none', color: '#64748b', fontWeight: '500', transition: 'color 0.2s' }}>Products</Link>
-                    <Link to="/cart" className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}>
-                        Cart ({itemCount})
-                    </Link>
-                </div>
-            </div>
-        </nav>
-    );
-};
-
-export default Navbar;
->>>>>>> f0044c4433d58b6d27cf1b70d793ae3f0f49f5ea
