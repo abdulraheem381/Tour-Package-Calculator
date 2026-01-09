@@ -20,7 +20,7 @@ jobs:
         - name: Build & push Frontend Image
           uses: docker/build-push-action@v6
           with:
-            context: app/frontent
+            context: app/frontend
             file: Dockerfile
             push: true 
             tags: ${{vars.DOCKER_USERNAME}}/tour-package-cal-front:${{github.run_id}} 
