@@ -1,7 +1,7 @@
 name: Build & Push Images 
 on: 
   push:
-    branches: [main, dev]  # Add branches for safety
+    branches: main  # Add branches for safety
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -18,7 +18,7 @@ jobs:
     - name: Login to DockerHub
       uses: docker/login-action@v3
       with:
-        username: ${{ vars.DOCKERHUB_USERNAME }}  # Fix: DOCKERHUB_USERNAME (not DOCKER_USERNAME)
+        username: ${{ vars.DOCKER_USERNAME }}  # Fix: DOCKERHUB_USERNAME (not DOCKER_USERNAME)
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build & Push Frontend Image
@@ -27,7 +27,7 @@ jobs:
         context: ./app/frontend          # Full path from repo root
         file: ./app/frontend/Dockerfile  # Full path to Dockerfile
         push: true
-        tags: ${{ vars.DOCKERHUB_USERNAME }}/tour-package-cal-front:${{ github.run_id }},${{ vars.DOCKERHUB_USERNAME }}/tour-package-cal-front:latest
+        tags: ${{ vars.DOCKER_USERNAME }}/tour-package-cal-front:${{ github.run_id }},${{ vars.DOCKER_USERNAME }}/tour-package-cal-front:latest
         cache-from: type=gha                                    # Cache for speed
         cache-to: type=gha,mode=max
 
@@ -37,6 +37,6 @@ jobs:
         context: ./app/backend
         file: ./app/backend/Dockerfile
         push: true
-        tags: ${{ vars.DOCKERHUB_USERNAME }}/tour-package-cal-backend:${{ github.run_id }},${{ vars.DOCKERHUB_USERNAME }}/tour-package-cal-backend:latest
+        tags: ${{ vars.DOCKER_USERNAME }}/tour-package-cal-backend:${{ github.run_id }},${{ vars.DOCKER_USERNAME }}/tour-package-cal-backend:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
