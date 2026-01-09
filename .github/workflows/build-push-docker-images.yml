@@ -1,0 +1,34 @@
+name: Build & Push Images 
+on: push
+jobs:
+    docker:
+        runs-on: ubuntu-latest
+        steps:
+        
+        - name: Checkout Repo 
+          uses: actions/checkout@v6
+       
+        - name: Install Docker
+          uses: docker/setup-docker-action@v4
+
+        - name: Login to Registry
+          uses: docker/login-action@v3
+          with:
+            username: ${{ vars.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
+        - name: Build & push Frontend Image
+          uses: docker/build-push-action@v6
+          with:
+            context: app/frontent
+            file: Dockerfile
+            push: true 
+            tags: ${{vars.DOCKER_USERNAME}}/tour-package-cal-front:${{github.run_id}} 
+
+        - name: Build & push Backend image
+          uses: docker/build-push-action@v6
+          with:
+            context: app/backend
+            file: Dockerfile
+            push: true
+            tags: ${{vars.DOCKER_USERNAME}}/tour-package-cal-backend:${{github.run_id}}
