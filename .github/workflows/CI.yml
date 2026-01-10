@@ -1,7 +1,8 @@
 name: Build & Push Images 
 on: 
   push:
-    branches: main  # Add branches for safety
+  workflow_dispatch:
+    
 jobs:
   
   frontend-lint-test:
