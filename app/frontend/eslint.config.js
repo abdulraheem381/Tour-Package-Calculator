@@ -5,14 +5,22 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 
 export default [
+  // Ignore build output
   {
     ignores: ["dist"],
   },
+
+  // React + JSX files
   {
     files: ["**/*.{js,jsx}"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true, // ✅ FIX: enable JSX
+        },
+      },
       globals: {
         ...globals.browser,
       },
@@ -27,14 +35,26 @@ export default [
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
 
-      // 🔥 IMPORTANT FIXES
-      "react/react-in-jsx-scope": "off",   // React 17+
-      "react/prop-types": "off",           // No PropTypes used
-      "no-unused-vars": ["warn"],           // Warn locally, not fail CI
+      // React 17+ / Vite fixes
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
+
+      // CI-friendly
+      "no-unused-vars": ["warn"],
     },
     settings: {
       react: {
         version: "detect",
+      },
+    },
+  },
+
+  // Node config files (Tailwind, Vite, etc.)
+  {
+    files: ["*.config.js", "tailwind.config.js", "vite.config.js"],
+    languageOptions: {
+      globals: {
+        ...globals.node, // ✅ FIX: allow require()
       },
     },
   },
