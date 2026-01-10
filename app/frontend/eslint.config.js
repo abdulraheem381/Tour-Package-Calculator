@@ -52,13 +52,16 @@ export default [
   },
 
   // Node-side config files (Tailwind, Vite, etc.)
-  {
-    files: ["tailwind.config.js", "vite.config.js"],
-    languageOptions: {
-      sourceType: "script",
-      globals: {
-        ...globals.node, // ✅ allow require, module, process
-      },
+  // Node-side config files (Tailwind, Vite, etc.)
+{
+  files: ["tailwind.config.js", "vite.config.js"],
+  languageOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module", // ✅ this was missing
+    globals: {
+      ...globals.node, // allow process, etc.
     },
   },
+},
+
 ];
