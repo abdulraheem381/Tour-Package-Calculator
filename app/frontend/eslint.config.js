@@ -10,7 +10,7 @@ export default [
     ignores: ["dist"],
   },
 
-  // React + JSX files
+  // React + JSX source files
   {
     files: ["**/*.{js,jsx}"],
     languageOptions: {
@@ -18,7 +18,7 @@ export default [
       sourceType: "module",
       parserOptions: {
         ecmaFeatures: {
-          jsx: true, // ✅ FIX: enable JSX
+          jsx: true, // ✅ Enable JSX parsing
         },
       },
       globals: {
@@ -31,18 +31,18 @@ export default [
       "react-refresh": reactRefresh,
     },
     rules: {
+      // Base + React recommended rules
       ...js.configs.recommended.rules,
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
 
-      // React 17+ / Vite fixes
+      // Vite / React 17+
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
       "react/no-unescaped-entities": "off",
 
-
-      // CI-friendly
-      "no-unused-vars": ["warn"],
+      // CI-friendly (warn but don’t fail)
+      "no-unused-vars": "warn",
     },
     settings: {
       react: {
@@ -51,12 +51,13 @@ export default [
     },
   },
 
-  // Node config files (Tailwind, Vite, etc.)
+  // Node-side config files (Tailwind, Vite, etc.)
   {
-    files: ["*.config.js", "tailwind.config.js", "vite.config.js"],
+    files: ["tailwind.config.js", "vite.config.js"],
     languageOptions: {
+      sourceType: "script",
       globals: {
-        ...globals.node, // ✅ FIX: allow require()
+        ...globals.node, // ✅ allow require, module, process
       },
     },
   },
