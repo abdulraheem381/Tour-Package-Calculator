@@ -36,6 +36,7 @@ jobs:
 
 
   backend-lint-test:
+    needs: frontend-lint-test
     name: Backend Lint & Test
     runs-on: ubuntu-latest
 
