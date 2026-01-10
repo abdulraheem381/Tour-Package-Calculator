@@ -38,6 +38,8 @@ export default [
       // React 17+ / Vite fixes
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
+      "react/no-unescaped-entities": "off",
+
 
       // CI-friendly
       "no-unused-vars": ["warn"],
